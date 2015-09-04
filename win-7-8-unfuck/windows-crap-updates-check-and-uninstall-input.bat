@@ -15,7 +15,7 @@ if errorlevel 2 goto uninstallno
 if errorlevel 1 goto uninstallyes
 
 :uninstallyes
-wusa /uninstall /kb:%kbnumber%
+wusa /uninstall /kb:%kbnumber% /norestart /quiet
 
 :uninstallno
 choice /c yn /m "Do you want to run the script again"
