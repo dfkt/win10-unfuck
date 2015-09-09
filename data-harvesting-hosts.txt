@@ -1,6 +1,52 @@
 URLs/IPs found by @EveningStarNM, @bartblaze, and Microsoft Engineer !JeCZI7VUg2
 Merged into one alphabetical list, removed duplicates, null-routed IPv4 and IPv6.
 
+Info: The larger your HOSTS file gets the slower your internet will become as the DNS service will always lookup the HOSTS file first.
+
+There are only two options i am aware of that will radically block everything (neither of them uses the HOSTS file):
+- Use a firewall like WFC from binisoft.org to block everything without abusing the HOSTS file
+- Use a custom DNS server or pay OpenDNS for it (this is also very good since you could use the blocklists from uBlock on a WAN wide basis and when you're on the go...)
+
+Microsoft whitelists some of their IPs/Domains in the dnsapi.dll file (beginning at offset 0x2404h) (%windir%\System32 / %windir%\SysWOW64). So to really make the HOSTS file work with EVERY domain you have to edit this file first:
+You can simply patch those two dnsapi.dll files with a Hex Editor like HxD by nulling (0x30h) all domains. Just save and HxD will automatically make a backup.
+Here is a complete list of all whitelisted domains:
+activation-v2.sls.microsoft.com
+download.microsoft.com
+go.microsoft.com
+microsoft.com
+microsoftupdate.com
+microsoftupdate.microsoft.com
+msdn.com
+msdn.microsoft.com
+msn.com
+office.microsoft.com
+support.microsoft.com
+technet.microsoft.com
+update.microsoft.com
+validation-v2.sls.microsoft.com
+windowsupdate.com
+windowsupdate.microsoft.com
+wustats.microsoft.com
+www.microsoft.com
+www.msdn.com
+www.msn.com
+www.technet.comtechnet.com
+
+Another big list could be found here:
+http://pastebin.com/krsQTypn  
+
+If you need a tool for managing your hosts file and updating it automatically: http://www.abelhadigital.com/hostsman
+If I would use the HOSTS file to block something I would prefer a Windows Scheduler Task that would download some quality HOSTS files of the internet, merges them via PowerShell (there is a great script somewhere out there to do this but i couldn't find it anymore) and then overwrites the HOSTS file. Some links to HOSTS files:
+http://winhelp2002.mvps.org/
+http://hosts-file.net/
+http://someonewhocares.org/hosts/
+http://www.malwaredomains.com/
+http://www.malwaredomainlist.com/
+http://www.spam404.com/
+http://pgl.yoyo.org/adservers/
+
+With this little tool you will see exactly which path/file was requested but you have to use 127.0.0.1 instead of 0.0.0.0: http://www.abelhadigital.com/hostsserver
+
 -------------------------------------------
 
 Info by bartblaze:

@@ -3,19 +3,41 @@ Expanded to remove *all* 'Modern/Metro' apps.
 
 Paste all at once into Powershell, or just the ones you want to remove:
 
-Get-AppxPackage *3d* | Remove-AppxPackage
-Get-AppxPackage *alarms* | Remove-AppxPackage
-Get-AppxPackage *bing* | Remove-AppxPackage
-Get-AppxPackage *calc* | Remove-AppxPackage
-Get-AppxPackage *camera* | Remove-AppxPackage
-Get-AppxPackage *communi* | Remove-AppxPackage
-Get-AppxPackage *maps* | Remove-AppxPackage
-Get-AppxPackage *note* | Remove-AppxPackage
-Get-AppxPackage *people* | Remove-AppxPackage
-Get-AppxPackage *phone* | Remove-AppxPackage
-Get-AppxPackage *photo* | Remove-AppxPackage
-Get-AppxPackage *solit* | Remove-AppxPackage
-Get-AppxPackage *soundrec* | Remove-AppxPackage
-Get-AppxPackage *store* | Remove-AppxPackage
-Get-AppxPackage *xbox* | Remove-AppxPackage
-Get-AppxPackage *zune* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *3d* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *alarms* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *bing* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *calc* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *camera* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *communi* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *maps* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *note* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *people* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *phone* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *photo* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *solit* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *soundrec* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *store* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *xbox* | Remove-AppxPackage
+Get-AppxPackage -AllUsers *zune* | Remove-AppxPackage
+
+You should remove the package for all users (-AllUsers) and also get rid of the provisioned package with this little PowerShell Script i wrote:
+$appxPackageNames = (Get-AppxProvisionedPackage -Online).PackageName -like "*3d*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*alarms*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*bing*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*calc*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*camera*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*communi*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*maps*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*note*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*people*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*phone*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*photo*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*solit*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*soundrec*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*store*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*xbox*"
+$appxPackageNames += (Get-AppxProvisionedPackage -Online).PackageName -like "*zune*"
+foreach ($appxPackageName in $appxPackageNames) { Remove-AppxProvisionedPackage -Online -PackageName $appxPackageName }
+
+To list all normal packages:
+Get-AppxPackage -AllUsers * | ? -Property IsFramework -eq $false | sort Name | ft Name

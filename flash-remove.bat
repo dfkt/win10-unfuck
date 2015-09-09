@@ -9,18 +9,20 @@ echo Run this script as admin.
 echo.
 pause
 
-takeown /f "%windir%\System32\Macromed" /r /d y
-icacls "%windir%\System32\Macromed" /grant administrators:F /t
-rd /s /q "%windir%\System32\Macromed"
+REM Only remove Flash Player as there are some people who use some other Adobe tools...
+
+takeown /f "%windir%\System32\Macromed\Flash" /r /d y
+icacls "%windir%\System32\Macromed\Flash" /grant administrators:F /t
+rd /s /q "%windir%\System32\Macromed\Flash"
 echo.
 
-takeown /f "%windir%\SysWOW64\Macromed" /r /d y
-icacls "%windir%\SysWOW64\Macromed" /grant administrators:F /t
-rd /s /q "%windir%\SysWOW64\Macromed"
+takeown /f "%windir%\SysWOW64\Macromed\Flash" /r /d y
+icacls "%windir%\SysWOW64\Macromed\Flash" /grant administrators:F /t
+rd /s /q "%windir%\SysWOW64\Macromed\Flash"
 echo.
 
-rd /s /q "%appdata%\Adobe"
-rd /s /q "%appdata%\Macromedia"
+rd /s /q "%appdata%\Adobe\Flash Player"
+rd /s /q "%appdata%\Macromedia\Flash Player"
 echo.
 
 pause
